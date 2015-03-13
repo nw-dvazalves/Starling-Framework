@@ -127,7 +127,7 @@ package starling.events
                     var touchArgs:Array = mQueue.pop();
                     touch = createOrUpdateTouch(
                                 touchArgs[0], touchArgs[1], touchArgs[2], touchArgs[3],
-                                touchArgs[4], touchArgs[5], touchArgs[6]);
+                                touchArgs[4], touchArgs[5], touchArgs[6], touchArgs[7]);
                     
                     sUpdatedTouches[sUpdatedTouches.length] = touch; // avoiding 'push'
                 }
@@ -193,7 +193,7 @@ package starling.events
         
         /** Enqueues a new touch our mouse event with the given properties. */
         public function enqueue(touchID:int, phase:String, globalX:Number, globalY:Number,
-                                pressure:Number=1.0, width:Number=1.0, height:Number=1.0):void
+                                pressure:Number=1.0, width:Number=1.0, height:Number=1.0, delta:int=0):void
         {
             mQueue.unshift(arguments);
             
@@ -266,7 +266,7 @@ package starling.events
         private function createOrUpdateTouch(touchID:int, phase:String,
                                              globalX:Number, globalY:Number,
                                              pressure:Number=1.0,
-                                             width:Number=1.0, height:Number=1.0):Touch
+                                             width:Number=1.0, height:Number=1.0, delta:int=0):Touch
         {
             var touch:Touch = getCurrentTouch(touchID);
             
@@ -276,6 +276,7 @@ package starling.events
                 addCurrentTouch(touch);
             }
             
+			touch.delta = delta;
             touch.globalX = globalX;
             touch.globalY = globalY;
             touch.phase = phase;

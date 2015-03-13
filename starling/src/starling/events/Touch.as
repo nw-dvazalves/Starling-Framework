@@ -39,6 +39,7 @@ package starling.events
      */  
     public class Touch
     {
+        private var mDelta:int;
         private var mID:int;
         private var mGlobalX:Number;
         private var mGlobalY:Number;
@@ -154,6 +155,11 @@ package starling.events
         
         // properties
         
+		public function get delta():int { return mDelta; }
+		public function set delta(value:int):void {
+			mDelta = value;
+		}
+		
         /** The identifier of a touch. '0' for mouse events, an increasing number for touches. */
         public function get id():int { return mID; }
         

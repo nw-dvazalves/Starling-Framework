@@ -748,6 +748,7 @@ package starling.core
         {
             if (!mStarted) return;
             
+            var delta:int;
             var globalX:Number;
             var globalY:Number;
             var touchID:int;
@@ -762,6 +763,7 @@ package starling.core
                 var mouseEvent:MouseEvent = event as MouseEvent;
                 globalX = mouseEvent.stageX;
                 globalY = mouseEvent.stageY;
+				delta = mouseEvent.delta;
                 touchID = 0;
                 
                 // MouseEvent.buttonDown returns true for both left and right button (AIR supports
@@ -798,6 +800,7 @@ package starling.core
                 case TouchEvent.TOUCH_END:   phase = TouchPhase.ENDED; break;
                 case MouseEvent.MOUSE_DOWN:  phase = TouchPhase.BEGAN; break;
                 case MouseEvent.MOUSE_UP:    phase = TouchPhase.ENDED; break;
+                case MouseEvent.MOUSE_WHEEL:    phase = TouchPhase.SCROLL; break;
                 case MouseEvent.MOUSE_MOVE: 
                     phase = (mLeftMouseDown ? TouchPhase.MOVED : TouchPhase.HOVER); break;
             }
@@ -807,7 +810,7 @@ package starling.core
             globalY = mStage.stageHeight * (globalY - mViewPort.y) / mViewPort.height;
             
             // enqueue touch in touch processor
-            mTouchProcessor.enqueue(touchID, phase, globalX, globalY, pressure, width, height);
+            mTouchProcessor.enqueue(touchID, phase, globalX, globalY, pressure, width, height, delta);
             
             // allow objects that depend on mouse-over state to be updated immediately
             if (event.type == MouseEvent.MOUSE_UP)
@@ -822,7 +825,7 @@ package starling.core
                 types.push(TouchEvent.TOUCH_BEGIN, TouchEvent.TOUCH_MOVE, TouchEvent.TOUCH_END);
             
             if (!multitouchEnabled || Mouse.supportsCursor)
-                types.push(MouseEvent.MOUSE_DOWN,  MouseEvent.MOUSE_MOVE, MouseEvent.MOUSE_UP);
+                types.push(MouseEvent.MOUSE_DOWN,  MouseEvent.MOUSE_MOVE, MouseEvent.MOUSE_UP, MouseEvent.MOUSE_WHEEL);
                 
             return types;
         }

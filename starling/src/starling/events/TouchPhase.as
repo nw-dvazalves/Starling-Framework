@@ -49,5 +49,8 @@ package starling.events
         
         /** The finger was lifted from the screen or from the mouse button. */
         public static const ENDED:String = "ended";
+		
+		/** The mouse wheel was used. */
+        public static const SCROLL:String = "scroll";
     }
 }
