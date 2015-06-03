@@ -153,7 +153,7 @@ package starling.display
         private var mIs3D:Boolean;
         private var mMask:DisplayObject;
         private var mIsMask:Boolean;
-		private var cursorMode:String;
+		private var mCursorModeHandCursor:String;
         
         /** Helper objects. */
         private static var sAncestors:Vector.<DisplayObject> = new <DisplayObject>[];
@@ -180,7 +180,7 @@ package starling.display
             mBlendMode = BlendMode.AUTO;
             mTransformationMatrix = new Matrix();
             mOrientationChanged = mUseHandCursor = false;
-			cursorMode = MouseCursor.AUTO;
+			mCursorModeHandCursor = MouseCursor.BUTTON;
         }
         
         /** Disposes all resources of the display object. 
@@ -757,7 +757,7 @@ package starling.display
         
         private function onTouch(event:TouchEvent):void
         {
-            Mouse.cursor = event.interactsWith(this) ? MouseCursor.BUTTON : cursorMode;
+            Mouse.cursor = event.interactsWith(this) ? this.mCursorModeHandCursor : MouseCursor.AUTO;
         }
         
         /** The bounds of the object relative to the local coordinates of the parent. */
@@ -918,7 +918,7 @@ package starling.display
         public function get blendMode():String { return mBlendMode; }
         public function set blendMode(value:String):void { mBlendMode = value; }
 		
-		public function set cursorMode(value:String):void { cursorMode = value; }
+		public function set cursorModeHandCursor(value:String):void { mCursorModeHandCursor = value; }
         
         /** The name of the display object (default: null). Used by 'getChildByName()' of 
          *  display object containers. */
